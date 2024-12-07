@@ -1,0 +1,79 @@
+{% extends '_base.html'%}
+{% load static%}
+
+{% block title%} My Expenses {% endblock%}
+
+
+{% block content%}
+ <div class="container mt-4">
+    
+   <div class="row ">
+    <div class="col-md-10 ">
+        <nav aria-label="breadcrumb bg-light">
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item ">
+                <a href="">Expenses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My expenses</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-md-2">
+        <a href="{% url 'dashboard:add_expenses'%}" class="btn btn-primary ">AddExpense</a>
+    </div>
+   </div>
+   <div class="container mt-2">
+    {% include 'partials/_message.html'%}
+    {% if expenses.count %}
+    <div class="card">
+      <div class="card-body"></div>  
+    <div class="row col-md-8"></div>
+    <div class="row col-md-4">
+        <div class="form-group ">
+            <input type="text" class="form-control" id="searchField" placeholder="Search" >
+        </div>
+    </div>
+    <table class="table table-stripped table-hover ">
+        <thead>
+            <tr>
+               <th>Amount</th>
+               <th>Category</th>
+               <th>Description</th>
+               <th>Date</th>
+               <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+            {% for expense in page_obj %}
+            <tr>
+            <td>{{expense.amount}} </td>
+            <td>{{expense.category}}</td>
+            <td>{{expense.description}}</td>
+            <td>{{expense.date}}</td>
+            <td><a href="{% url 'dashboard:expense_edit' expense.id %}" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+            
+        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     <div class="">
+       Showing Page{{page_obj.number}} of {{ page_obj.paginator.num_pages }} 
+
+     </div>
+
+
+   {% endif %}
+   </div>
+   </div>
+ </div>
+
+ <script src="{% static 'assets/js/searchExpenses.js'%}">
+      
+
+ </script>
+ 
+{% endblock %}

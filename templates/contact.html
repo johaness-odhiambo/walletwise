@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+
+{% load static %}
+{% block title %}Contact Us {% endblock %}
+
+{% block content%}
+
+
+    
+    <section id="contact" class="contact section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p>Let's have a chat</p>
+        </div><!-- End Section Title -->
+  
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-6">
+  
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <div class="info-item" data-aos="fade" data-aos-delay="200">
+                    <i class="bi bi-geo-alt"></i>
+                    <h4>Address</h4>
+                    <p>Kisumu-Busia Road</p>
+                    <p>Maseno, p.o box 123</p>
+                    <p>Kisumu, Kenya</p>
+                  </div>
+                </div><!-- End Info Item -->
+  
+                <div class="col-md-6">
+                  <div class="info-item" data-aos="fade" data-aos-delay="300">
+                    <i class="bi bi-telephone"></i>
+                    <h3>Call Us</h3>
+                    <p>+2547 9159 295</p>
+                    <p></p>
+                  </div>
+                </div><!-- End Info Item -->
+  
+                <div class="col-md-6">
+                  <div class="info-item" data-aos="fade" data-aos-delay="400">
+                    <i class="bi bi-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>info.walletwise@gmail.com</p>
+                    <p>contact.walletwise@gmail.com</p>
+                  </div>
+                </div><!-- End Info Item -->
+  
+                <div class="col-md-6">
+                  <div class="info-item" data-aos="fade" data-aos-delay="500">
+                    <i class="bi bi-clock"></i>
+                    <h3>Open Hours</h3>
+                    <p>Monday - Sundat</p>
+                    <p>24 hours</p>
+                  </div>
+                </div><!-- End Info Item -->
+  
+              </div>
+  
+            </div>
+  
+            <div class="col-lg-6">
+              <form action="{% url 'expenses:contact'%}" method="post" >
+                {% csrf_token%}
+                <div class="row gy-4">
+  
+                  <div class="col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  </div>
+  
+                  <div class="col-md-6 ">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                  </div>
+  
+                  <div class="col-12">
+                    <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  </div>
+  
+                  <div class="col-12">
+                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  </div>
+  
+                  <div class="col-12 text-center">
+                    <div class="loading"></div>
+                    <div class="error-message"></div>
+                    <div class="sent-message"></div>
+  
+                    <button type="submit" class="btn btn-block btn-primary" >Send Message</button>
+                  </div>
+  
+                </div>
+              </form>
+            </div><!-- End Contact Form -->
+        </div>
+
+    </div>
+
+  </section>
+
+
+{% endblock %}

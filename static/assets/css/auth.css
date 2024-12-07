@@ -1,0 +1,33 @@
+body {
+    background-color: #f8f9fa;
+}
+.card {
+    margin: 50px auto;
+    width: 50%;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+}
+.form-group .input-group-addon {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+}
+.form-control {
+    border-radius: 5px 0 0 5px;
+}
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.login-register {
+    text-align: center;
+    margin-top: 10px;
+}
