@@ -28,23 +28,24 @@ def search_expenses(request):
 
 
 # Create your views here.
-@login_required()
+@login_required(login_url='/accounts/login')
 def home(request):
     categories =Category.objects.all()
     expenses=Expense.objects.filter(owner=request.user)
-    paginator=Paginator(expenses, 2)
+    paginator=Paginator(expenses, 5) # show 5 objects per page
     page_number=request.GET.get('page')
-    page_obj=Paginator.get_page(paginator,page_number)
-
+    page_obj=Paginator.get_page(paginator, page_number)
+    user= request.user
     context={
             'expenses': expenses,
-            'page_obj': page_obj
+            'page_obj': page_obj,
+            'username': user.username
         }
     return render(request, '_dashboard/index.html', context )
 
 
 #Updating the records  
-@login_required 
+@login_required(login_url='/accounts/login')
 def add_expenses(request):
     expenses=Expense.objects.filter(owner=request.user)
     categories = Category.objects.all()
@@ -86,7 +87,7 @@ def add_expenses(request):
         return redirect( 'dashboard:dashboard')
      
 
-     
+@login_required(login_url='/accounts/login')    
 def expense_edit(request, id):
     expense =Expense.objects.get(pk=id)
     categories= Category.objects.all()
@@ -130,7 +131,7 @@ def expense_edit(request, id):
         messages.success(request, 'Expense updated successfully')
 
         return redirect( 'dashboard:dashboard')
-
+@login_required(login_url='/accounts/login')
 def delete_expense(request, id):
     expense=Expense.objects.get(pk=id)
     expense.delete()
@@ -138,21 +139,25 @@ def delete_expense(request, id):
     return redirect( 'dashboard:dashboard')
 
 # endpoint for charts
+@login_required(login_url='/accounts/login')
 def expense_category_summary(request):
-    todays_date= datetime.date.today()
-    six_months_ago= todays_date-datetime.timedelta(days=360)
+    todays_date= datetime.date.today() # Gets today's date
+    six_months_ago= todays_date-datetime.timedelta(days=360) # Represents a duration of 360 days
     expenses=Expense.objects.filter(owner=request.user,date__gte=six_months_ago, date__lte=todays_date)
+    # creating a dictionary to store each category as a key and its total expenses as the value
     finalrep= {}
-
+    
+    # Function to return expenses based on category
     def get_category(expense):
         return expense.category
     category_list= list(set(map(get_category, expenses)))
-    
+    # Function to return the calculted expenses of each category
     def get_expense_category_amount(category):
-        amount=0
-        filter_by_category=expenses.filter(category= category)
+        amount= 0
+        filter_by_category = expenses.filter(category= category)
+        # To sum up the amounts of all filtered expenses
         for item in filter_by_category:
-            amount += item.amount
+            amount += item.amount 
         return amount
     
     for i in expenses:
@@ -161,5 +166,6 @@ def expense_category_summary(request):
 
     return JsonResponse({'expense_category_date': finalrep},safe=False)          
 
+@login_required(login_url='/accounts/login')
 def stats(request):
     return render(request, '_dashboard/stats.html')

@@ -9,7 +9,7 @@
 
 <form action="{% url 'accounts:login' %}" method="post">
     {% include 'partials/_message.html'%}
-    {% csrf_token %}
+    {% csrf_token%}
     <div class="form-group">
         <label for="username" class="cols-sm-2 control-label">Username</label>
         <div class="cols-sm-10">

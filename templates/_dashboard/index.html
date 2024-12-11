@@ -21,9 +21,11 @@
         <a href="{% url 'dashboard:add_expenses'%}" class="btn btn-primary ">AddExpense</a>
     </div>
    </div>
+
    <div class="container mt-2">
     {% include 'partials/_message.html'%}
     {% if expenses.count %}
+    <div> Welcome back, {{ username }}!</div>
     <div class="card">
       <div class="card-body"></div>  
     <div class="row col-md-8"></div>
@@ -54,17 +56,32 @@
             <td>{{expense.date}}</td>
             <td><a href="{% url 'dashboard:expense_edit' expense.id %}" class="btn btn-primary btn-sm">Edit</a>
             </td>
+            <td><a href="{% url 'dashboard:expense_delete' expense.id%}" class="btn btn-danger btn-sm">Delete</a></td>
             
         </tr>
             {% endfor %}
         </tbody>
     </table>
 
-     <div class="">
+     <div class="paginator-info">
        Showing Page{{page_obj.number}} of {{ page_obj.paginator.num_pages }} 
 
      </div>
+    <ul class="pagination align-right float-right ar-auto">
+       {% if page_obj.has_previous %} 
+       <li {% if page_obj.number == 1 %} class="page_item active" {%endif%}> <a href="?page=1" class="page_link">&laquo; 1 </a> </li>
+       <li class="page_item"> <a href="?page={{ page_obj.previous_page_umber }}" class="page_link">Previous</a> </li>
+       {%endif%}
+       
+       {% if page_obj.has_next %}
+       <li class="page_item" > <a class="page_link" href="?page={{ page_obj.next_page_number }}">Next</a> </li>
+       <li class="page_item"> <a class="page_link" href="?page={{ page_obj.paginator.num_pages }}"> {{ page_obj.paginator.num_pages }}&raquo; </a> </li>
+       {%endif%}
+       
 
+
+    </ul>
+    
 
    {% endif %}
    </div>
